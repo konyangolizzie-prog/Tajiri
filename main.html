@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b0f17" />
+    <title>Tajiri POS · Main Menu</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0b0f17;
+        --panel: rgb(19 28 41 / 88%);
+        --line: rgb(163 181 204 / 16%);
+        --text: #f4f6fb;
+        --muted: #aab5c6;
+        --green: #77e2b8;
+        --blue: #86b8ff;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        min-width: 320px;
+      }
+      body {
+        min-height: 100vh;
+        margin: 0;
+        padding: 40px 22px;
+        display: grid;
+        place-items: center;
+        overflow-x: hidden;
+        color: var(--text);
+        background:
+          radial-gradient(
+            ellipse at 18% 8%,
+            rgb(70 119 163 / 22%),
+            transparent 38rem
+          ),
+          radial-gradient(
+            ellipse at 88% 88%,
+            rgb(33 126 102 / 15%),
+            transparent 34rem
+          ),
+          var(--bg);
+        font:
+          16px/1.5 "DM Sans",
+          "Segoe UI",
+          sans-serif;
+      }
+      main {
+        width: min(100%, 880px);
+        margin-inline: auto;
+      }
+      header {
+        margin-bottom: 38px;
+        text-align: center;
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 34px;
+        color: #dce5f2;
+        font-size: 0.95rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+      .brand-mark {
+        display: inline-grid;
+        width: 42px;
+        height: 42px;
+        place-items: center;
+        border: 1px solid rgb(119 226 184 / 38%);
+        border-radius: 14px;
+        color: var(--bg);
+        background: linear-gradient(145deg, #a3f1d0, var(--green));
+        box-shadow: 0 8px 26px rgb(61 187 143 / 20%);
+        font-size: 2px;
+        font-weight: 800;
+      }
+      .eyebrow {
+        margin: 0 0 10px;
+        color: var(--green);
+        font-size: 0.74rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+      h1 {
+        margin: 0;
+        font-family: "Outfit", "Segoe UI", sans-serif;
+        font-size: clamp(2.2rem, 6vw, 3.8rem);
+        letter-spacing: -0.055em;
+        line-height: 1.08;
+      }
+      header p {
+        margin: 14px 0 0;
+        color: var(--muted);
+        font-size: 1.05rem;
+      }
+      .page-links {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+      .page-link {
+        position: relative;
+        min-height: 252px;
+        padding: 26px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        color: inherit;
+        background: linear-gradient(145deg, rgb(26 38 55 / 95%), var(--panel));
+        box-shadow: 0 18px 50px rgb(0 0 0 / 22%);
+        text-decoration: none;
+        transition:
+          border-color 0.2s ease,
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+      .page-link::after {
+        position: absolute;
+        top: -72px;
+        right: -62px;
+        width: 190px;
+        height: 190px;
+        border-radius: 50%;
+        background: var(--glow);
+        content: "";
+        filter: blur(1px);
+        opacity: 0.11;
+        pointer-events: none;
+      }
+      .page-link.admin {
+        --glow: var(--blue);
+        --accent: var(--blue);
+      }
+      .page-link.cashier {
+        --glow: var(--green);
+        --accent: var(--green);
+      }
+      .page-link:hover,
+      .page-link:focus-visible {
+        transform: translateY(-4px);
+        border-color: color-mix(in srgb, var(--accent), transparent 28%);
+        box-shadow: 0 24px 58px rgb(0 0 0 / 32%);
+        outline: none;
+      }
+      .page-link:focus-visible {
+        box-shadow:
+          0 0 0 3px var(--bg),
+          0 0 0 5px var(--accent);
+      }
+      .page-link[hidden] {
+        display: none;
+      }
+      .page-icon {
+        width: 54px;
+        height: 54px;
+        margin-bottom: 28px;
+        display: grid;
+        place-items: center;
+        border: 1px solid color-mix(in srgb, var(--accent), transparent 75%);
+        border-radius: 17px;
+        color: var(--accent);
+        background: color-mix(in srgb, var(--accent), transparent 91%);
+      }
+      .page-icon svg {
+        width: 25px;
+        height: 25px;
+      }
+      .page-link strong {
+        font-family: "Outfit", "Segoe UI", sans-serif;
+        font-size: 1.35rem;
+        letter-spacing: -0.02em;
+      }
+      .page-description {
+        max-width: 31ch;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 0.94rem;
+      }
+      .page-cta {
+        /* margin-top: auto; */
+        padding-top: 24px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--accent);
+        font-size: 0.9rem;
+        font-weight: 700;
+      }
+      .page-cta span {
+        transition: transform 0.2s ease;
+      }
+      .page-link:hover .page-cta span,
+      .page-link:focus-visible .page-cta span {
+        transform: translateX(4px);
+      }
+      footer {
+        margin-top: 28px;
+        color: #8491a4;
+        text-align: center;
+        font-size: 0.86rem;
+      }
+      .footer-lock {
+        margin-right: 6px;
+        color: var(--green);
+      }
+      @media (max-width: 580px) {
+        body {
+          padding: 30px 18px;
+        }
+        header {
+          margin-bottom: 28px;
+        }
+        .brand {
+          margin-bottom: 28px;
+        }
+        .page-links {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+        .page-link {
+          min-height: 220px;
+          padding: 23px;
+        }
+        .page-icon {
+          margin-bottom: 20px;
+        }
+        footer {
+          margin-top: 22px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">t</span
+          ><span>Tajiri POS</span>
+        </div>
+        <p class="eyebrow">Your store, in control</p>
+        <h1>Welcome back.</h1>
+        <p>Choose a workspace to continue to your point of sale.</p>
+      </header>
+      <nav class="page-links" aria-label="Application pages">
+        <a class="page-link admin" href="admin.html">
+          <span class="page-icon" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="4" width="18" height="16" rx="3" />
+              <path d="M8 8h3v3H8zM14 8h3M14 11h3M8 15h9" />
+            </svg>
+          </span>
+          <strong>Admin sign in</strong>
+          <span class="page-description"
+            >Securely sign in to manage products, staff, reports, and store settings.</span
+          >
+          <span class="page-cta"
+            >Continue to admin <span aria-hidden="true">→</span></span
+          >
+        </a>
+        <a class="page-link cashier" href="cashier.html">
+          <span class="page-icon" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M4 10h16l1 10H3l1-10Z" />
+              <path d="M7 10V6a5 5 0 0 1 10 0v4M8 14h.01M12 14h.01M16 14h.01" />
+            </svg>
+          </span>
+          <strong>Cashier</strong>
+          <span class="page-description"
+            >Start a shift, process sales, and view your transactions.</span
+          >
+          <span class="page-cta"
+            >Open cashier workspace <span aria-hidden="true">→</span></span
+          >
+        </a>
+      </nav>
+      <footer>
+        <span class="footer-lock" aria-hidden="true">●</span>Your account role
+        determines which workspace you can access.
+      </footer>
+    </main>
+    <script>
+      function readSignedRole(storage, userKey, roleKey, signatureKey) {
+        const user = storage.getItem(userKey);
+        const role = storage.getItem(roleKey);
+        const signature = storage.getItem(signatureKey);
+        if (!user || !role || !signature) return null;
+
+        const value = `${String(user).trim()}|${String(role).trim()}|tajiri-pos-session-v1`;
+        let hash = 2166136261;
+        for (let index = 0; index < value.length; index += 1) {
+          hash = Math.imul(hash ^ value.charCodeAt(index), 16777619);
+        }
+        if (signature !== (hash >>> 0).toString(16).padStart(8, "0")) {
+          return null;
+        }
+        return {
+          user: String(user).trim().toLowerCase(),
+          role: String(role).trim().toLowerCase(),
+        };
+      }
+
+      const session =
+        readSignedRole(
+          sessionStorage,
+          "tajiri-session-user",
+          "tajiri-session-role",
+          "tajiri-session-signature",
+        ) ||
+        readSignedRole(
+          localStorage,
+          "tajiri-remembered-user",
+          "tajiri-remembered-role",
+          "tajiri-remembered-signature",
+        );
+      if (session?.role === "cashier") {
+        const adminLink = document.querySelector(".page-link.admin");
+        if (adminLink) adminLink.hidden = true;
+      }
+    </script>
+  </body>
+</html>
